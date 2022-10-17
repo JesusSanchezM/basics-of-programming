@@ -7,9 +7,11 @@ output: pdf_document
 #Exploring data 
 
 ```{r}
+library(tidyverse)
+
 starwars
 dim(starwars) #87 obs and 14 variables 
-str(starwars)
+#str(starwars)
 glimpse(starwars)
 head(starwars) #first 6 obs
 tail(starwars) #last 6 obs
