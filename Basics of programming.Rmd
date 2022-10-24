@@ -127,6 +127,102 @@ starwars %>%
 
 #Manipulating data
 
+```{r}
+library(tidyverse)
+
+glimpse(msleep)
+
+#rename a variable
+
+msleep %>%  
+  rename("conserv"= "conservation") %>% 
+  glimpse()
+
+#reorder a variable 
+
+msleep %>%  
+  select(vore, name, everything())
+
+#Change a variable name 
+
+class(msleep$vore)
+glimpse(msleep)
+msleep$vore <- as.factor(msleep$vore)
+glimpse(msleep$vore)
+
+msleep %>%  
+  mutate(vore = as.character(vore)) %>% 
+  glimpse()
+
+#select variables to work with
+
+names(msleep)
+msleep %>% 
+  select(2:4,
+         awake, 
+         starts_with("sleep"),
+         contains("wt")) %>% 
+  names()
+
+#filter and arrange data
+
+unique(msleep$order)
+
+msleep %>%  
+  filter((order=="Carnivora" |
+          order=="Primates") &
+           sleep_total > 8) %>% 
+  select(name, order, sleep_total) %>% 
+  arrange(-sleep_total) %>% 
+  View
+  
+msleep %>%  
+  filter(order %in% c("Carnivora","Primates") &
+           sleep_total > 8) %>% 
+  select(name, order, sleep_total) %>% 
+  arrange(order) %>% 
+  View
+
+#change observations (mutate) 
+
+msleep %>% 
+  mutate(brainwt_grams = brainwt * 1000) %>% 
+  View
+
+#conditional changes(if_else)
+#logical vector based on a conditional 
+
+msleep$brainwt > 0.01
+
+size_of_brain <- msleep %>% 
+  select(name, brainwt) %>% 
+  drop_na(brainwt) %>% 
+  mutate(brain_size = if_else(brainwt > 0.01, 
+                              "large",
+                              "small"))
+  View #If it is true then large, if not then small
+
+#Recode data and rename a variable 
+##Change obs of "large" and "small" into 
+
+size_of_brain %>%  
+  mutate(brain_size = recode(brain_size, 
+                             "large"= 1, 
+                             "small"=2))
+
+#reshape the data from wide to long or long to wide
+
+
+library(gapminder)
+View(gapminder)
+
+data <- select(gapminder, country, year, lifeExp)
+data
+
+
+```
+
+
 #Visualise
 
 #Analyse
