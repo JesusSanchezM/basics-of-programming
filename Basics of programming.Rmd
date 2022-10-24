@@ -55,14 +55,12 @@ data()
 View(starwars)
 glimpse(starwars)
 unique(starwars$gender) #displays data type in the obs of a specific column
-attach(starwars)
 
 starwars$gender <- as.factor(starwars$gender)
 class(starwars$gender)#now gender is a factor
-class(starwars$gender)
 
 levels(starwars$gender)
-starwars$gender <- factor((starwars$gender), levels = c("f", "m"))
+starwars$gender <- factor((starwars$gender), levels = c("feminine", "masculine"))
 #changing levels
 
 starwars %>% select(name, height, ends_with("color")) %>% 
