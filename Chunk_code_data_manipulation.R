@@ -73,7 +73,84 @@ summary(height)
 boxplot(height) #boxplot 
 hist(height) #histeogram
   
-  
+#cleaning data--------------------------------------------
+
+library(tidyverse)
+data()
+View(starwars)
+glimpse(starwars)
+unique(starwars$gender) #displays data type in the obs of a specific column
+attach(starwars)
+
+starwars$gender <- as.factor(starwars$gender)
+class(starwars$gender)#now gender is a factor
+class(starwars$gender)
+
+levels(starwars$gender)
+starwars$gender <- factor((starwars$gender), levels = c("f", "m"))
+#changing levels
+
+starwars %>% select(name, height, ends_with("color")) %>% 
+  names()
+unique(starwars$hair_color)
+
+starwars %>% 
+  select(name, height, ends_with("color")) %>% 
+  filter(hair_color %in% c("blond", "brown") & height < 180)
+#%in% works for group more than 1 variable 
+
+#missing data
+
+mean(starwars$height) #we have a NA because there's missin values Na
+mean(starwars$height, na.rm = T)
+
+starwars %>% 
+  select(name, gender, hair_color, height) %>% 
+  na.omit()
+
+starwars %>% 
+  select(name, gender, hair_color, height) %>% 
+  filter(!complete.cases(.)) #what obs we deleted
+
+starwars %>% 
+  select(name, gender, hair_color, height) %>% 
+  filter(!complete.cases(.)) %>% 
+  drop_na(height) 
+
+starwars %>% 
+  select(name, gender, hair_color, height) %>% 
+  filter(!complete.cases(.)) %>% 
+  mutate(hair_color = replace_na(hair_color, "none"))
+#replacing all NA values from hair_color
+
+#Duplicates-------------------------------
+
+Names <- c("Peter", "John", "Andrew", "Peter")
+Age <- c(22,33,44,22)
+
+friends <- data.frame(Names, Age)
+duplicated(friends) #reporting duplicates
+
+friends[!duplicated(friends), ] #the archaic method 
+
+friends %>% distinct() #using tydiverse
+
+#recording variables----------------------------------
+
+starwars %>% select(name, gender)
+class(starwars$gender)
+starwars$gender <- as.factor(starwars$gender)
+class(starwars$gender) #now we can recode the variable
+levels(starwars$gender)
+
+starwars %>% 
+  select(name, gender) %>% 
+  mutate(gender_coded = recode(gender, 
+                         "masculine"= 1,
+                         "feminine" = 2))
+
+
+
 
 
 
