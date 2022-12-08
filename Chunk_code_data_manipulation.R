@@ -260,7 +260,59 @@ View(wide_data)
 data()
 View(msleep)
 
+#Describing the spread , centrality and variance of your data
 
+attach(msleep)
+
+min(awake)
+max(awake)
+range(awake)
+IQR(awake)
+mean(awake)
+median(awake)
+var(awake)
+
+summary(awake)
+
+msleep %>%  
+  select(sleep_total, brainwt) %>% 
+  summary()
+
+#create summary table 
+
+msleep %>%  
+  drop_na(vore) %>%  
+  group_by(vore) %>% 
+  summarise(Lower = min (sleep_total),
+            Average = mean(sleep_total), 
+            Upper= max(sleep_total),
+            Difference =
+              max(sleep_total)-min(sleep_total)) %>% 
+  arrange(Average) %>% 
+  View()
+  
+#Creating contengency tables
+
+library(MASS)
+attach(Cars93)
+
+glimpse(Cars93)
+
+table(Origin)
+table(AirBags, Origin)
+addmargins(table(AirBags, Origin), 1)
+
+prop.table(table(AirBags, Origin))*100 #by 100% in total
+
+prop.table(table(AirBags, Origin), 2)*100 #by 100% in each column
+
+round(prop.table(table(AirBags, Origin), 2)*100)
+
+Cars93 %>% 
+  group_by(Origin, AirBags) %>% 
+  summarise(number=n()) %>% 
+  pivot_wider(names_from =Origin, 
+              values_from =number)
 
 
 
