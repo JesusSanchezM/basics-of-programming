@@ -314,12 +314,36 @@ Cars93 %>%
   pivot_wider(names_from =Origin, 
               values_from =number)
 
+#--------------------------------------------------
+#-------------------------------------------------
+#Visualize--------------------------
+#--------------------------------------------------
+#-------------------------------------------------
+
+View(starwars)
+library(gapminder)
+View(gapminder)
+
+gapminder %>% 
+  filter(continent %in% c("Africa", "Europe")) %>% 
+  filter(gdpPercap <30000) %>% 
+  ggplot(mapping= aes(x=gdpPercap,
+             y= lifeExp,
+             size = pop,
+             color=year)) +
+  geom_point()+
+  facet_wrap(~continent)+
+  labs(title="Life expectancy explained GDP",
+       X= "GDP", 
+       y="Life expectency")
 
 
-
-
-
-
+gapminder %>% 
+  filter(country %in% c("Mexico", "Germany")) %>% 
+  ggplot(aes(x=year, 
+             y= lifeExp))+
+  geom_smooth(color="Blue") + 
+  facet_wrap(~country)
 
 
 
